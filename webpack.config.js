@@ -1,10 +1,14 @@
 var webpack = require('webpack')
 var path = require("path")
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+        index: './src/index.js',
+        state: './src/state.js',
+        page: './src/page.js',
+    },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'index.js'
+    filename: '[name].js'
   },
     module: {
         loaders: [{
@@ -14,6 +18,10 @@ module.exports = {
             query: {
                 presets: ['es2015', 'stage-0', 'react']
             }
-        }]
+        },{
+            test: /\.css$/, 
+            loader: "style-loader!css-loader" 
+        }
+        ]
     }
 }
