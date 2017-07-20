@@ -5,7 +5,8 @@ module.exports = {
         index: './src/index.js',
         state: './src/state.js',
         page: './src/page.js',
-        datepicker: './src/datepicker.js'
+        datepicker: './src/datepicker.js',
+        echarts: './src/echarts.js',
     },
   output: {
     path: path.resolve(__dirname, './dist'),
