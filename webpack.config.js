@@ -5,6 +5,7 @@ module.exports = {
         index: './src/index.js',
         state: './src/state.js',
         page: './src/page.js',
+        datepicker: './src/datepicker.js'
     },
   output: {
     path: path.resolve(__dirname, './dist'),

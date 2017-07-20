@@ -28,8 +28,10 @@
     "webpack": "^3.3.0"
   },
   "dependencies": {
+    "moment": "^2.18.1",
     "rc-pagination": "^1.10.0",
     "react": "^15.6.1",
+    "react-datepicker": "^0.52.0",
     "react-dom": "^15.6.1"
   }
 }
