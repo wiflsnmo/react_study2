@@ -10,7 +10,7 @@ class Example extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      startDate: moment()
+      startDate: moment(),
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,6 +23,7 @@ class Example extends React.Component {
 
   render() {
     return <DatePicker
+        dateFormat="YYYY/MM/DD"
         selected={this.state.startDate}
         onChange={this.handleChange}
     />;
