@@ -4,51 +4,18 @@ import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 
 window.React = React;
-var clist = {
-    name:"comments",
-    comments:[{
-        index:1,
-        comment:"asdfasdf1"
-    },
-    {
-        index:2,
-        comment:"asdfasdf2"
-    },
-    {
-        index:3,
-        comment:"asdfasdf3"
-    },
-    {
-        index:4,
-        comment:"asdfasdf4"
-    },
-    {
-        index:5,
-        comment:"asdfasdf5"
-    },
-    {
-        index:6,
-        comment:"asdfasdf6"
-    },
-    {
-        index:7,
-        comment:"asdfasdf7"
-    }
-    ]
-}
+
 
 export class CommentList extends Component {
   render() {
-    let commentNodes = this.props.data.map(function(comment, index) {
-      return (
-        <div key={index}>{comment.comment}</div>
-      );
-    });
-    var comment =  this.props.data;
     return (
       <div id="project-comments" className="commentList">
         <ul>
-          {commentNodes}
+          {
+              this.props.data.map((comment, index) => {
+                  return <div key={index}>{comment.name}</div>
+              })
+          }
         </ul>
       </div>
     );
@@ -61,21 +28,44 @@ export class App extends Component {
 
     this.state = {
       data: [],
-      clist: clist,
       offset: 0
     }
   }
 
-  // handlePageClick = (data) => {
-  //   let offset = Math.ceil(selected * this.props.perPage);
+  loadCommentsFromServer() {
+    $.ajax({
+      url      : this.props.url,
+      data     : {limit: this.props.perPage, offset: this.state.offset},
+      dataType : 'json',
+      type     : 'GET',
 
-  //   this.setState({offset: offset});
-  // };
+      success: data => {
+        this.setState({data: data.comments});
+      },
+
+      error: (xhr, status, err) => {
+        console.error(this.props.url, status, err.toString());
+      }
+    });
+  }
+
+  componentDidMount() {
+    this.loadCommentsFromServer();
+  }
+
+  handlePageClick = (data) => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.props.perPage);
+
+    this.setState({offset: offset}, () => {
+      this.loadCommentsFromServer();
+    });
+  };
 
   render() {
     return (
       <div className="commentBox">
-        <CommentList data={this.state.clist.comments} />
+        <CommentList data={this.state.data} />
         <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}
                        breakLabel={<a href="">...</a>}
@@ -93,6 +83,7 @@ export class App extends Component {
 };
 
 ReactDOM.render(
-  <App perPage={5} />,
+  <App url={'http://localhost/test_json/text.php?flag=showmessage'}
+       perPage={2} />,
   document.getElementById('react-paginate')
 );

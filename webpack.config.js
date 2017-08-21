@@ -9,6 +9,7 @@ module.exports = {
         echarts: './src/echarts.js',
         popup: './src/popup.js',
         page2: './src/page2.js',
+        page3: './src/page3.js',
     },
   output: {
     path: path.resolve(__dirname, './dist'),
